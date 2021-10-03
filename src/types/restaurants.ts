@@ -1,3 +1,5 @@
+import { Review } from "./reviews";
+
 export type Cuisine =
   | "American"
   | "Indian"
@@ -14,4 +16,6 @@ export type Restaurant = {
   cuisines?: Cuisine[];
   priceForTwo: number;
   likes: number;
+  isVegan: boolean;
+  reviews?: Review[];
 };

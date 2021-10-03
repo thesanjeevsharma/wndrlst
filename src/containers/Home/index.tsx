@@ -95,7 +95,7 @@ const Home = () => {
   const history = useHistory();
 
   const navigateToCity = React.useCallback(
-    (cityId: string) => history.push(`/city/${cityId}`),
+    (cityId: string) => history.push(`/cities/${cityId}`),
     [history]
   );
 
