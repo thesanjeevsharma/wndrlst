@@ -1,28 +1,19 @@
-import React from "react";
-import { Image } from "@chakra-ui/image";
-import {
-  Badge,
-  Box,
-  Heading,
-  HStack,
-  SimpleGrid,
-  Text,
-} from "@chakra-ui/layout";
-import { Stat, StatGroup, StatLabel, StatNumber } from "@chakra-ui/stat";
-import { useHistory, Link } from "react-router-dom";
-
-import { Layout } from "..";
-import { RestaurantCard } from "components";
-
-import type { City as CityType } from "types/cities";
-import type { Restaurant } from "types/restaurants";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
 } from "@chakra-ui/breadcrumb";
+import { Box, Heading, SimpleGrid } from "@chakra-ui/layout";
+import React from "react";
+import { useHistory, Link } from "react-router-dom";
 
-const mockCity: CityType = {
+import { Layout } from "..";
+import { RestaurantCard } from "../../components";
+
+import type { City } from "types/cities";
+import type { Restaurant } from "types/restaurants";
+
+const mockCity: City = {
   id: "1",
   name: "New York City",
   image:
@@ -51,7 +42,7 @@ const mockCity: CityType = {
       cuisines: ["American"],
       priceForTwo: 50,
       likes: 452,
-      isVegan: false,
+      isVegan: true,
     },
     {
       id: "2",
@@ -64,12 +55,12 @@ const mockCity: CityType = {
       cuisines: ["American"],
       priceForTwo: 30,
       likes: 234,
-      isVegan: false,
+      isVegan: true,
     },
   ],
 };
 
-const City = () => {
+const Restaurants = () => {
   const history = useHistory();
 
   const onLikeClick = (restaurantId: string): void => {
@@ -95,66 +86,19 @@ const City = () => {
             <Link to="/cities">Cities</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
-        <BreadcrumbItem isCurrentPage>
+        <BreadcrumbItem>
           <BreadcrumbLink>
             <Link to={`/cities/${mockCity.id}`}>{mockCity.name}</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
+        <BreadcrumbItem isCurrentPage>
+          <BreadcrumbLink>Restaurants</BreadcrumbLink>
+        </BreadcrumbItem>
       </Breadcrumb>
 
-      <SimpleGrid columns={2} spacing={8} mb={24}>
-        <Box>
-          <Heading>{mockCity.name}</Heading>
-          <Text size="lg" textColor="gray.500" mb={4}>
-            {mockCity.state}, {mockCity.country}
-          </Text>
-          <HStack spacing={2} mb={10}>
-            {mockCity.isCovidFree ? (
-              <Badge colorScheme="green">COVID Free</Badge>
-            ) : (
-              <Badge colorScheme="warning">Not COVID Free</Badge>
-            )}
-            {mockCity.isHillStation && (
-              <Badge colorScheme="purple">Mountains</Badge>
-            )}
-            {mockCity.isBeachStation && (
-              <Badge colorScheme="blue">Beaches</Badge>
-            )}
-          </HStack>
-          <StatGroup mb={4}>
-            <Stat>
-              <StatLabel>Population</StatLabel>
-              <StatNumber>
-                {mockCity.population.toLocaleString("en-US")}
-              </StatNumber>
-            </Stat>
-            <Stat>
-              <StatLabel>Area</StatLabel>
-              <StatNumber>
-                {`${mockCity.area.toLocaleString("en-US")} km²`}
-              </StatNumber>
-            </Stat>
-          </StatGroup>
-          <StatGroup mb={8}>
-            <Stat>
-              <StatLabel>Language(s)</StatLabel>
-              <StatNumber>{mockCity.languages.join(",")}</StatNumber>
-            </Stat>
-            <Stat>
-              <StatLabel>Currency</StatLabel>
-              <StatNumber>{mockCity.currency}</StatNumber>
-            </Stat>
-          </StatGroup>
-          <Text size="xl">{mockCity.description}</Text>
-        </Box>
-        <Box>
-          <Image src={mockCity.image} borderRadius={8} />
-        </Box>
-      </SimpleGrid>
-
       <Box>
-        <Heading color="gray.600" size="lg" mb={8}>
-          Restaurants
+        <Heading size="md" mb={4}>
+          {mockCity.restaurants.length} Restaurants in {mockCity.name}
         </Heading>
         <SimpleGrid columns={3} spacing={8}>
           {mockCity.restaurants.map((restaurant: Restaurant) => (
@@ -171,4 +115,4 @@ const City = () => {
   );
 };
 
-export default City;
+export default Restaurants;

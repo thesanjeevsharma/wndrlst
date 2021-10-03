@@ -1,13 +1,23 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import { City, Home } from "./containers";
+import { City, Home, Restaurant, Restaurants } from "./containers";
 
 const App = () => {
   return (
     <Router>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/city/:id" component={City} />
+        <Route exact path="/cities/:cityId" component={City} />
+        <Route
+          exact
+          path="/cities/:cityId/restaurants"
+          component={Restaurants}
+        />
+        <Route
+          exact
+          path="/cities/:cityId/restaurants/:restaurantId"
+          component={Restaurant}
+        />
       </Switch>
     </Router>
   );
