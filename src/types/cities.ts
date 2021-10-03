@@ -1,3 +1,5 @@
+import { Restaurant } from "./restaurants";
+
 export type City = {
   id: string;
   name: string;
@@ -7,9 +9,13 @@ export type City = {
   area: number;
   currency: string;
   languages: string[];
-  flag: string;
+  state: string;
+  country: string;
   createdAt: string;
   isCovidFree: boolean;
   isHillStation: boolean;
   isBeachStation: boolean;
+  restaurants: Restaurant[];
 };
+
+export type HomeCity = Pick<City, "id" | "name" | "image">;

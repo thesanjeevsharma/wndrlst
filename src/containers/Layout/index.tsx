@@ -12,7 +12,7 @@ type Props = {
 
 const Layout = ({ children, withNav = true, px = 12, ...props }: Props) => {
   return (
-    <Box>
+    <Box textColor="gray.700">
       {withNav && <Navbar />}
       <Box px={px} {...props}>
         {children}
