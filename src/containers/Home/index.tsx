@@ -1,4 +1,6 @@
+import React from "react";
 import { Box, Center, VStack } from "@chakra-ui/layout";
+import { useHistory } from "react-router-dom";
 
 import { Layout } from "../";
 import { CitiesSection, Search } from "../../components";
@@ -10,16 +12,17 @@ const mockData = [
     data: [
       {
         id: "1",
-        name: "New York",
+        name: "New York City",
         image:
           "https://images.unsplash.com/photo-1499092346589-b9b6be3e94b2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1171&q=80",
         description:
           "New York is a state in the Northeastern and Mid-Atlantic regions of the United States. New York is the 27th-most extensive, the third-most populous, and the seventh-most densely populated of the 50 United States. New York is bordered by New Jersey and Pennsylvania to the south, Pennsylvania to the north, Connecticut and Massachusetts to the west, and the Atlantic Ocean to the east.",
         population: 8550902,
         area: 14973.0,
+        state: "New York",
+        country: "United States",
         currency: "United States Dollar",
         languages: ["English"],
-        flag: "https://restcountries.eu/data/usa.svg",
         createdAt: "Today",
         isCovidFree: true,
         isHillStation: false,
@@ -36,7 +39,8 @@ const mockData = [
         area: 14973.0,
         currency: "United States Dollar",
         languages: ["English"],
-        flag: "https://restcountries.eu/data/usa.svg",
+        state: "New York",
+        country: "United States",
         createdAt: "Today",
         isCovidFree: true,
         isHillStation: false,
@@ -58,7 +62,8 @@ const mockData = [
         area: 14973.0,
         currency: "United States Dollar",
         languages: ["English"],
-        flag: "https://restcountries.eu/data/usa.svg",
+        state: "New York",
+        country: "United States",
         createdAt: "Today",
         isCovidFree: true,
         isHillStation: false,
@@ -75,7 +80,8 @@ const mockData = [
         area: 14973.0,
         currency: "United States Dollar",
         languages: ["English"],
-        flag: "https://restcountries.eu/data/usa.svg",
+        state: "New York",
+        country: "United States",
         createdAt: "Today",
         isCovidFree: true,
         isHillStation: false,
@@ -86,6 +92,13 @@ const mockData = [
 ];
 
 const Home = () => {
+  const history = useHistory();
+
+  const navigateToCity = React.useCallback(
+    (cityId: string) => history.push(`/city/${cityId}`),
+    [history]
+  );
+
   return (
     <Layout withNav={false} px={0}>
       <Box
@@ -101,7 +114,7 @@ const Home = () => {
       <Box px={12} pt={16} pb={40}>
         <VStack spacing={16} align="flex-start">
           {mockData.map((section) => (
-            <CitiesSection {...section} />
+            <CitiesSection {...section} onCityClick={navigateToCity} />
           ))}
         </VStack>
       </Box>

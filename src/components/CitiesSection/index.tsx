@@ -2,20 +2,21 @@ import React from "react";
 import { Box, Grid, Heading } from "@chakra-ui/layout";
 
 import { CityCard } from "..";
-import type { City } from "types/cities";
+import type { HomeCity } from "types/cities";
 
 type Props = {
   title: string;
-  data: City[];
+  data: HomeCity[];
+  onCityClick: (cityId: string) => void;
 };
 
-const CitiesSection = ({ title, data }: Props) => {
+const CitiesSection = ({ title, data, onCityClick }: Props) => {
   return (
     <Box>
       <Heading mb={8}>{title}</Heading>
       <Grid templateColumns="repeat(6, 1fr)" gap={4}>
         {data.map((city) => (
-          <CityCard city={city} />
+          <CityCard city={city} onClick={onCityClick} />
         ))}
       </Grid>
     </Box>

@@ -1,14 +1,20 @@
 import React from "react";
 import { Box, Center, Text } from "@chakra-ui/layout";
 
-import type { City } from "types/cities";
+import type { HomeCity } from "types/cities";
 
 type Props = {
-  city: City;
+  city: HomeCity;
+  onClick: (id: string) => void;
 };
 
-const CityCard = ({ city }: Props) => {
-  const { name, image } = city;
+const CityCard = ({ city, onClick }: Props) => {
+  const { id, name, image } = city;
+
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>): void => {
+    event.preventDefault();
+    onClick(id);
+  };
 
   return (
     <Box
@@ -20,6 +26,7 @@ const CityCard = ({ city }: Props) => {
       bgSize="cover"
       position="relative"
       cursor="pointer"
+      onClick={handleClick}
     >
       <Center
         bottom={0}
