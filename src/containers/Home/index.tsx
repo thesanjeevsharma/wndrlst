@@ -5,6 +5,8 @@ import { useHistory } from "react-router-dom";
 import { Layout } from "../";
 import { CitiesSection, Search } from "../../components";
 import Navbar from "../Navbar";
+import { useAppDispatch, useAppSelector } from "store";
+import { fetchPopularCities } from "store/cities/actions";
 
 const mockData = [
   {
@@ -93,11 +95,18 @@ const mockData = [
 
 const Home = () => {
   const history = useHistory();
+  const dispatch = useAppDispatch();
+
+  const cities = useAppSelector((state) => state.cities.popularCities);
 
   const navigateToCity = React.useCallback(
     (cityId: string) => history.push(`/cities/${cityId}`),
     [history]
   );
+
+  React.useEffect(() => {
+    dispatch(fetchPopularCities());
+  }, [dispatch]);
 
   return (
     <Layout withNav={false} px={0}>
@@ -113,9 +122,11 @@ const Home = () => {
       </Box>
       <Box px={12} pt={16} pb={40}>
         <VStack spacing={16} align="flex-start">
-          {mockData.map((section) => (
-            <CitiesSection {...section} onCityClick={navigateToCity} />
-          ))}
+          <CitiesSection
+            title="Popular"
+            data={cities}
+            onCityClick={navigateToCity}
+          />
         </VStack>
       </Box>
     </Layout>
