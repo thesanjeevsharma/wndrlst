@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Carousel } from "react-responsive-carousel";
 import {
   Breadcrumb,
@@ -24,34 +24,38 @@ import { LikeIcon } from "assets/icons";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
-import type { Restaurant as RestaurantType } from "types/restaurants";
-
-const mockRestaurant: RestaurantType = {
-  id: "1",
-  city_id: "1",
-  name: "Lord's Restaurant",
-  address: "New York, NY",
-  images: [
-    "https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1074&q=80",
-    "https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1074&q=80",
-    "https://images.unsplash.com/photo-1428515613728-6b4607e44363?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=80",
-  ],
-  cuisines: ["American"],
-  priceForTwo: 50,
-  likes: 452,
-  isVegan: true,
-};
+import { useDispatch } from "react-redux";
+import { fetchRestaurant } from "store/restaurants/actions";
+import { useAppSelector } from "store";
+import { Center, Spinner } from "@chakra-ui/react";
 
 const Restaurant = () => {
+  const dispatch = useDispatch()
+  const { cityId, restaurantId } = useParams<{ cityId: string; restaurantId: string }>()
+
+  const { restaurant, meta: { isRestaurantLoading } } = useAppSelector(state => state.restaurants)
+
   const handleLikeClick = (
     event: React.MouseEvent<SVGElement, MouseEvent>
   ): void => {
     event.preventDefault();
-    console.log(mockRestaurant.id);
+    console.log(restaurantId);
   };
+
+  React.useEffect(() => {
+    dispatch(fetchRestaurant(parseInt(restaurantId)))
+  }, [dispatch, restaurantId])
 
   return (
     <Layout pt={8} pb={48}>
+{
+  isRestaurantLoading ? (
+    <Center>
+      <Spinner color="green.500" size="sm" />
+    </Center>
+  ) : (
+    <>
+
       <Breadcrumb mb={8}>
         <BreadcrumbItem>
           <BreadcrumbLink>
@@ -65,7 +69,7 @@ const Restaurant = () => {
         </BreadcrumbItem>
         <BreadcrumbItem>
           <BreadcrumbLink>
-            <Link to={`/cities/1`}>New York City</Link>
+            <Link to={`/cities/${cityId}`}>{ restaurant.city.name }</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbItem>
@@ -75,8 +79,8 @@ const Restaurant = () => {
         </BreadcrumbItem>
         <BreadcrumbItem isCurrentPage>
           <BreadcrumbLink>
-            <Link to={`/cities/1/restaurants/${mockRestaurant.id}`}>
-              {mockRestaurant.name}
+            <Link to={`/cities/1/restaurants/${restaurant.id}`}>
+              {restaurant.name}
             </Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
@@ -84,11 +88,11 @@ const Restaurant = () => {
 
       <Box maxWidth="768px" mx="auto">
         <Heading size="lg" mb={2}>
-          {mockRestaurant.name}
+          {restaurant.name}
         </Heading>
-        {mockRestaurant.cuisines && (
+        {restaurant.cuisines && (
           <HStack mb={8}>
-            {mockRestaurant.cuisines.map((cuisine: string) => (
+            {restaurant.cuisines.map((cuisine: string) => (
               <Badge>{cuisine}</Badge>
             ))}
           </HStack>
@@ -100,7 +104,7 @@ const Restaurant = () => {
             showStatus={false}
             swipeable
           >
-            {mockRestaurant.images.map((image: string) => (
+            {restaurant.images.map((image: string) => (
               <Box
                 height="600px"
                 width="100%"
@@ -112,7 +116,7 @@ const Restaurant = () => {
             ))}
           </Carousel>
         </Box>
-        {mockRestaurant.isVegan && (
+        {restaurant.is_vegan && (
           <Alert status="success" borderRadius={4} width="fit-content" mb={8}>
             <AlertIcon />
             This is a Vegan Restaurant.
@@ -122,7 +126,7 @@ const Restaurant = () => {
           <Stat>
             <StatLabel>Price for two</StatLabel>
             <StatNumber>
-              ${mockRestaurant.priceForTwo.toLocaleString("en-US")}
+              ${restaurant.price_for_two.toLocaleString("en-US")}
             </StatNumber>
           </Stat>
           <Stat>
@@ -130,13 +134,13 @@ const Restaurant = () => {
             <Flex align="center">
               <LikeIcon mr={2} cursor="pointer" onClick={handleLikeClick} />
               <StatNumber>
-                {mockRestaurant.likes.toLocaleString("en-US")}
+                {restaurant.likes.toLocaleString("en-US")}
               </StatNumber>
             </Flex>
           </Stat>
         </StatGroup>
         <Text mb={8}>
-          <Text fontWeight="bold">Address:</Text> {mockRestaurant.address}
+          <Text fontWeight="bold">Address:</Text> {restaurant.address}
         </Text>
 
         <Divider mb={8} />
@@ -145,6 +149,10 @@ const Restaurant = () => {
           <Heading size="md">Reviews</Heading>
         </Box> */}
       </Box>
+    </>
+  )
+}
+
     </Layout>
   );
 };

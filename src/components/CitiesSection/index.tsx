@@ -2,11 +2,11 @@ import React from "react";
 import { Box, Grid, Heading } from "@chakra-ui/layout";
 
 import { CityCard } from "..";
-import type { HomeCity } from "types/cities";
+import type { LeanCity } from "types/cities";
 
 type Props = {
   title: string;
-  data: HomeCity[];
+  data: LeanCity[];
   onCityClick: (cityId: string) => void;
 };
 

@@ -3,18 +3,18 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import thunkMiddleware from "redux-thunk";
 
 import { citiesReducer } from "./cities/reducer";
+import { restaurantsReducer } from "./restaurants/reducer";
 
 const rootReducer = combineReducers({
   cities: citiesReducer,
+  restaurants: restaurantsReducer
 });
 
 const devTools =
-  process.env.NODE_ENV === "development"
-    ? (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
+    (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
       (window as any).__REDUX_DEVTOOLS_EXTENSION__()
-    : undefined;
 
-const enhancer = compose(applyMiddleware(thunkMiddleware), devTools);
+const enhancer = process.env.NODE_ENV === "development" ? compose(applyMiddleware(thunkMiddleware), devTools) : applyMiddleware(thunkMiddleware);
 
 export const store = createStore(rootReducer, enhancer);
 

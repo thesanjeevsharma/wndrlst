@@ -12,7 +12,7 @@ type Props = {
 };
 
 const RestaurantCard = ({ restaurant, onLikeClick, onHeadingClick }: Props) => {
-  const { name, images, priceForTwo, likes, cuisines } = restaurant;
+  const { name, images, price_for_two, likes, cuisines } = restaurant;
 
   const handleLikeClick = (
     event: React.MouseEvent<SVGElement, MouseEvent>
@@ -31,7 +31,7 @@ const RestaurantCard = ({ restaurant, onLikeClick, onHeadingClick }: Props) => {
   return (
     <Box>
       <Box bg="gray.100" height="300" overflow="hidden" borderRadius={8}>
-        <Image src={images[0]} width="100%" height="auto" />
+        <Image src={images[0]} width="100%" height="100%" objectFit="cover" />
       </Box>
       <Flex p={4} align="flex-start" justify="space-between">
         <Box>
@@ -47,7 +47,7 @@ const RestaurantCard = ({ restaurant, onLikeClick, onHeadingClick }: Props) => {
           </Heading>
           {cuisines && <Text color="gray.500"> {cuisines.join(",")} </Text>}
           <Text mt={2} textColor="gray.600" fontWeight="bold">
-            ${priceForTwo} for two
+            ${price_for_two} for two
           </Text>
         </Box>
         <Flex align="center">

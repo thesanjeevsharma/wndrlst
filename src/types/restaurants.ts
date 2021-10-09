@@ -14,8 +14,10 @@ export type Restaurant = {
   images: string[];
   address: string;
   cuisines?: Cuisine[];
-  priceForTwo: number;
+  price_for_two: number;
   likes: number;
-  isVegan: boolean;
+  is_vegan: boolean;
   reviews?: Review[];
 };
+
+export type LeanRestaurant = Pick<Restaurant, 'id' | 'name' | 'images' | 'address' | 'price_for_two' | 'likes'>

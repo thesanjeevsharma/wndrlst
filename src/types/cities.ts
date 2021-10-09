@@ -3,7 +3,7 @@ import { Restaurant } from "./restaurants";
 export type City = {
   id: string;
   name: string;
-  image: string;
+  images: string[];
   description: string;
   population: number;
   area: number;
@@ -12,10 +12,10 @@ export type City = {
   state: string;
   country: string;
   createdAt: string;
-  isCovidFree: boolean;
-  isHillStation: boolean;
-  isBeachStation: boolean;
+  is_covid_free: boolean;
+  is_hill_station: boolean;
+  is_beach_station: boolean;
   restaurants: Restaurant[];
 };
 
-export type HomeCity = Pick<City, "id" | "name" | "image">;
+export type LeanCity = Pick<City, "id" | "name" | "images">;
