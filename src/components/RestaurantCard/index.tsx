@@ -1,32 +1,32 @@
-import React from "react";
-import { Image } from "@chakra-ui/image";
-import { Box, Flex, Heading, Text } from "@chakra-ui/layout";
+import React from 'react'
+import { Image } from '@chakra-ui/image'
+import { Box, Flex, Heading, Text } from '@chakra-ui/layout'
 
-import { LikeIcon } from "assets/icons";
-import type { Restaurant } from "types/restaurants";
+import { LikeIcon } from 'assets/icons'
+import type { Restaurant } from 'types/restaurants'
 
 type Props = {
-  restaurant: Restaurant;
-  onLikeClick: (id: string) => void;
-  onHeadingClick: (id: string) => void;
-};
+  restaurant: Restaurant
+  onLikeClick: (id: string) => void
+  onHeadingClick: (id: string) => void
+}
 
 const RestaurantCard = ({ restaurant, onLikeClick, onHeadingClick }: Props) => {
-  const { name, images, price_for_two, likes, cuisines } = restaurant;
+  const { name, images, price_for_two, likes, cuisines } = restaurant
 
   const handleLikeClick = (
     event: React.MouseEvent<SVGElement, MouseEvent>
   ): void => {
-    event.stopPropagation();
-    onLikeClick(restaurant.id);
-  };
+    event.stopPropagation()
+    onLikeClick(restaurant.id)
+  }
 
   const handleHeadingClick = (
     event: React.MouseEvent<HTMLHeadingElement, MouseEvent>
   ): void => {
-    event.stopPropagation();
-    onHeadingClick(restaurant.id);
-  };
+    event.stopPropagation()
+    onHeadingClick(restaurant.id)
+  }
 
   return (
     <Box>
@@ -39,13 +39,13 @@ const RestaurantCard = ({ restaurant, onLikeClick, onHeadingClick }: Props) => {
             size="md"
             cursor="pointer"
             _hover={{
-              color: "green.500",
+              color: 'green.500',
             }}
             onClick={handleHeadingClick}
           >
             {name}
           </Heading>
-          {cuisines && <Text color="gray.500"> {cuisines.join(",")} </Text>}
+          {cuisines && <Text color="gray.500"> {cuisines.join(',')} </Text>}
           <Text mt={2} textColor="gray.600" fontWeight="bold">
             ${price_for_two} for two
           </Text>
@@ -53,12 +53,12 @@ const RestaurantCard = ({ restaurant, onLikeClick, onHeadingClick }: Props) => {
         <Flex align="center">
           <LikeIcon cursor="pointer" onClick={handleLikeClick} />
           <Text color="gray.600" ml={2}>
-            {likes.toLocaleString("en-US")} likes
+            {likes.toLocaleString('en-US')} likes
           </Text>
         </Flex>
       </Flex>
     </Box>
-  );
-};
+  )
+}
 
-export default RestaurantCard;
+export default RestaurantCard

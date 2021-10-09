@@ -1,25 +1,30 @@
-import { applyMiddleware, combineReducers, compose, createStore } from "redux";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import thunkMiddleware from "redux-thunk";
+import { applyMiddleware, combineReducers, compose, createStore } from "redux"
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux"
+import thunkMiddleware from "redux-thunk"
 
-import { citiesReducer } from "./cities/reducer";
-import { restaurantsReducer } from "./restaurants/reducer";
+import { citiesReducer } from "./cities/reducer"
+import { restaurantsReducer } from "./restaurants/reducer"
+import { userReducer } from "./user/reducer"
 
 const rootReducer = combineReducers({
   cities: citiesReducer,
-  restaurants: restaurantsReducer
-});
+  restaurants: restaurantsReducer,
+  user: userReducer,
+})
 
 const devTools =
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
-      (window as any).__REDUX_DEVTOOLS_EXTENSION__()
+  (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
+  (window as any).__REDUX_DEVTOOLS_EXTENSION__()
 
-const enhancer = process.env.NODE_ENV === "development" ? compose(applyMiddleware(thunkMiddleware), devTools) : applyMiddleware(thunkMiddleware);
+const enhancer =
+  process.env.NODE_ENV === "development"
+    ? compose(applyMiddleware(thunkMiddleware), devTools)
+    : applyMiddleware(thunkMiddleware)
 
-export const store = createStore(rootReducer, enhancer);
+export const store = createStore(rootReducer, enhancer)
 
-export type AppState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export type AppState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
 
-export const useAppDispatch = () => useDispatch<AppDispatch>();
-export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector;
+export const useAppDispatch = () => useDispatch<AppDispatch>()
+export const useAppSelector: TypedUseSelectorHook<AppState> = useSelector

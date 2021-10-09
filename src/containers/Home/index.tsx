@@ -1,21 +1,23 @@
-import React from "react";
-import { Box, Center, VStack } from "@chakra-ui/layout";
-import { useHistory } from "react-router-dom";
+import React from 'react'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import { Box, Center, VStack } from '@chakra-ui/layout'
+import { Button, Spinner } from '@chakra-ui/react'
 
-import { Layout } from "../";
-import { CitiesSection, Search } from "../../components";
-import Navbar from "../Navbar";
-import {useAppSelector } from "store";
-import { fetchPopularCities } from "store/cities/actions";
-import { useDispatch } from "react-redux";
-import { Button, Spinner } from "@chakra-ui/react";
+import { useAppSelector } from 'store'
+import { fetchPopularCities } from 'store/cities/actions'
+
+import { CitiesSection, Search } from '../../components'
+import { Layout, Navbar } from '../'
 
 const Home = () => {
-  const history = useHistory();
-  const dispatch = useDispatch();
+  const history = useHistory()
+  const dispatch = useDispatch()
 
-  const cities = useAppSelector((state) => state.cities.popularCities);
-  const isLoading = useAppSelector((state) => state.cities.meta.isPopularCitiesLoading);
+  const cities = useAppSelector((state) => state.cities.popularCities)
+  const isLoading = useAppSelector(
+    (state) => state.cities.meta.isPopularCitiesLoading
+  )
 
   const navigateToCities = () => {
     history.push('/cities')
@@ -24,12 +26,11 @@ const Home = () => {
   const navigateToCity = React.useCallback(
     (cityId: string) => history.push(`/cities/${cityId}`),
     [history]
-  );
+  )
 
   React.useEffect(() => {
-    dispatch(fetchPopularCities());
-  }, [dispatch]);
-
+    dispatch(fetchPopularCities())
+  }, [dispatch])
 
   return (
     <Layout withNav={false} px={0}>
@@ -48,22 +49,27 @@ const Home = () => {
           <Center>
             <Spinner color="green.500" size="sm" />
           </Center>
-        ) : (<VStack spacing={16} align="flex-start">
-          <CitiesSection
-            title="Popular Cities"
-            data={cities}
-            onCityClick={navigateToCity}
-          />
-          <Center w="full">
-          <Button colorScheme="whatsapp" variant="link" onClick={navigateToCities}>
-    View all Cities
-  </Button>
-
-          </Center>
-        </VStack>)}
+        ) : (
+          <VStack spacing={16} align="flex-start">
+            <CitiesSection
+              title="Popular Cities"
+              data={cities}
+              onCityClick={navigateToCity}
+            />
+            <Center w="full">
+              <Button
+                colorScheme="whatsapp"
+                variant="link"
+                onClick={navigateToCities}
+              >
+                View all Cities
+              </Button>
+            </Center>
+          </VStack>
+        )}
       </Box>
     </Layout>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

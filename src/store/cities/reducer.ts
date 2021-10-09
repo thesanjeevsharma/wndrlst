@@ -1,20 +1,26 @@
-import { CITY_ERROR, FETCHING_CITY, FETCH_CITIES, FETCH_CITY, FETCH_POPULAR_CITIES } from "./actions";
+import {
+  CITY_ERROR,
+  FETCHING_CITY,
+  FETCH_CITIES,
+  FETCH_CITY,
+  FETCH_POPULAR_CITIES,
+} from './actions'
 
-import type { City, LeanCity } from "types/cities";
+import type { City, LeanCity } from 'types/cities'
 
 export type State = {
-  cities: City[];
-  popularCities: LeanCity[];
-  city: City | null;
+  cities: City[]
+  popularCities: LeanCity[]
+  city: City | null
   meta: {
-    isCitiesLoading: boolean;
-    isPopularCitiesLoading: boolean;
-    citiesError: null | string;
-    popularCitiesError: null | string;
-    isCityLoading: boolean;
-    cityError: null | string;
-  };
-};
+    isCitiesLoading: boolean
+    isPopularCitiesLoading: boolean
+    citiesError: null | string
+    popularCitiesError: null | string
+    isCityLoading: boolean
+    cityError: null | string
+  }
+}
 
 const initialState: State = {
   cities: [],
@@ -26,9 +32,9 @@ const initialState: State = {
     citiesError: null,
     popularCitiesError: null,
     isCityLoading: true,
-    cityError: null
+    cityError: null,
   },
-};
+}
 
 // TODO: type redux
 export const citiesReducer = (state = initialState, action): State => {
@@ -42,7 +48,7 @@ export const citiesReducer = (state = initialState, action): State => {
           isCitiesLoading: false,
           citiesError: null,
         },
-      };
+      }
     }
     case FETCH_POPULAR_CITIES: {
       return {
@@ -53,7 +59,7 @@ export const citiesReducer = (state = initialState, action): State => {
           isPopularCitiesLoading: false,
           popularCitiesError: null,
         },
-      };
+      }
     }
 
     case FETCHING_CITY: {
@@ -63,8 +69,8 @@ export const citiesReducer = (state = initialState, action): State => {
         meta: {
           ...state.meta,
           isCityLoading: true,
-          cityError: null
-        }
+          cityError: null,
+        },
       }
     }
     case FETCH_CITY: {
@@ -74,8 +80,8 @@ export const citiesReducer = (state = initialState, action): State => {
         meta: {
           ...state.meta,
           isCityLoading: false,
-          cityError: null
-        }
+          cityError: null,
+        },
       }
     }
     case CITY_ERROR: {
@@ -85,12 +91,12 @@ export const citiesReducer = (state = initialState, action): State => {
         meta: {
           ...state.meta,
           isCityLoading: false,
-          cityError: action.payload.error
-        }
+          cityError: action.payload.error,
+        },
       }
     }
 
     default:
-      return state;
+      return state
   }
-};
+}

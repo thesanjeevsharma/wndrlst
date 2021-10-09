@@ -1,6 +1,6 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
-import { Cities, City, Home, Restaurant, Restaurants } from "./containers";
+import { Cities, City, Home, Restaurant, Restaurants } from './containers'
 
 const App = () => {
   return (
@@ -21,7 +21,7 @@ const App = () => {
         />
       </Switch>
     </Router>
-  );
-};
+  )
+}
 
-export default App;
+export default App
