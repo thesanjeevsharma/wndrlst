@@ -47,7 +47,7 @@ const Home = () => {
       <Box px={12} pt={16} pb={40}>
         {isLoading ? (
           <Center>
-            <Spinner color="green.500" size="sm" />
+            <Spinner color="#22c35e" size="sm" />
           </Center>
         ) : (
           <VStack spacing={16} align="flex-start">
