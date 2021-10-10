@@ -1,14 +1,14 @@
-import { Review } from "./reviews"
+import { Review } from './reviews'
 
 export type Cuisine =
-  | "American"
-  | "Indian"
-  | "Chinese"
-  | "Italian"
-  | "Continental"
+  | 'American'
+  | 'Indian'
+  | 'Chinese'
+  | 'Italian'
+  | 'Continental'
 
 export type Restaurant = {
-  id: string
+  id: number
   city_id: string
   name: string
   images: string[]
@@ -22,5 +22,5 @@ export type Restaurant = {
 
 export type LeanRestaurant = Pick<
   Restaurant,
-  "id" | "name" | "images" | "address" | "price_for_two" | "likes"
+  'id' | 'name' | 'images' | 'address' | 'price_for_two' | 'likes'
 >

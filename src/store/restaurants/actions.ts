@@ -5,6 +5,7 @@ export const FETCHING_RESTAURANTS = 'FETCHING_RESTAURANTS'
 export const FETCH_RESTAURANTS = 'FETCH_RESTAURANTS'
 export const FETCHING_RESTAURANT = 'FETCHING_RESTAURANT'
 export const FETCH_RESTAURANT = 'FETCH_RESTAURANT'
+export const RESTAURANT_LIKE_TOGGLED = 'RESTAURANT_LIKE_TOGGLED'
 
 export const fetchRestaurants = (cityId: number) => async (dispatch) => {
   try {
@@ -32,3 +33,11 @@ export const fetchRestaurant = (restaurantId: number) => async (dispatch) => {
     console.log(error)
   }
 }
+
+export const toggleRestaurantLike = (
+  restaurantId: number,
+  isLiked: boolean
+) => ({
+  type: RESTAURANT_LIKE_TOGGLED,
+  payload: { restaurantId, isLiked },
+})

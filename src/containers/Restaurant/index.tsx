@@ -19,17 +19,23 @@ import {
 import { Image } from '@chakra-ui/image'
 import { Alert, AlertIcon } from '@chakra-ui/alert'
 import { Stat, StatGroup, StatLabel, StatNumber } from '@chakra-ui/stat'
-import { Center, Spinner } from '@chakra-ui/react'
+import { Center, Spinner, useToast } from '@chakra-ui/react'
 
 import { LikeIcon } from 'assets/icons'
 import { useAppSelector } from 'store'
-import { fetchRestaurant } from 'store/restaurants/actions'
+import {
+  fetchRestaurant,
+  toggleRestaurantLike,
+} from 'store/restaurants/actions'
 
 import { Layout } from '..'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
+import supabase from 'supabase'
+import { CODES } from 'constants/codes'
 
 const Restaurant = () => {
   const dispatch = useDispatch()
+  const toast = useToast()
   const { cityId, restaurantId } =
     useParams<{ cityId: string; restaurantId: string }>()
 
@@ -37,12 +43,57 @@ const Restaurant = () => {
     restaurant,
     meta: { isRestaurantLoading },
   } = useAppSelector((state) => state.restaurants)
+  const { user, likedRestaurants } = useAppSelector((state) => state.user)
 
-  const handleLikeClick = (
+  const isLiked = likedRestaurants.includes(parseInt(restaurantId))
+
+  const handleLikeClick = async (
     event: React.MouseEvent<SVGElement, MouseEvent>
-  ): void => {
+  ) => {
     event.preventDefault()
-    console.log(restaurantId)
+
+    const newLikedState = !isLiked
+
+    if (!user?.id) {
+      return toast({
+        position: 'top-right',
+        title: 'Oops! Cannot do that.',
+        description: 'Please login to like.',
+        status: 'error',
+        isClosable: true,
+        duration: 3000,
+      })
+    }
+
+    let result
+    if (newLikedState === true) {
+      result = await supabase
+        .from('likes')
+        .insert([{ user_id: user.id, restaurant_id: restaurant.id }])
+    } else {
+      result = await supabase
+        .from('likes')
+        .delete()
+        .match({ user_id: user.id, restaurant_id: restaurant.id })
+    }
+
+    const { error } = result
+
+    if (error) {
+      if (error.code === CODES.DUPLICATE_RECORD) {
+        return console.log('Dev Error: logic for like')
+      }
+      return toast({
+        position: 'top-right',
+        title: 'Something went wrong!',
+        description: 'Please try again, later.',
+        status: 'error',
+        isClosable: true,
+        duration: 3000,
+      })
+    }
+
+    dispatch(toggleRestaurantLike(restaurant.id, newLikedState))
   }
 
   React.useEffect(() => {
@@ -138,7 +189,12 @@ const Restaurant = () => {
               <Stat>
                 <StatLabel>Likes</StatLabel>
                 <Flex align="center">
-                  <LikeIcon mr={2} cursor="pointer" onClick={handleLikeClick} />
+                  <LikeIcon
+                    mr={2}
+                    cursor="pointer"
+                    onClick={handleLikeClick}
+                    isFilled={isLiked}
+                  />
                   <StatNumber>
                     {restaurant.likes.toLocaleString('en-US')}
                   </StatNumber>

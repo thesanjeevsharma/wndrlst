@@ -35,7 +35,6 @@ export const fetchPopularCities = () => {
       .from('cities')
       .select(Q.HOME_CITY)
       .eq('is_popular', true)
-    console.log('Hello', { data })
     dispatch({ type: FETCH_POPULAR_CITIES, payload: { cities: data } })
   }
 }

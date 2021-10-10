@@ -16,7 +16,7 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
 } from '@chakra-ui/breadcrumb'
-import { Button, Center, Spinner } from '@chakra-ui/react'
+import { Button, Center, Spinner, useToast } from '@chakra-ui/react'
 
 import { RestaurantCard } from 'components'
 import { useAppSelector } from 'store'
@@ -24,33 +24,82 @@ import { fetchCity } from 'store/cities/actions'
 import type { Restaurant } from 'types/restaurants'
 
 import { Layout } from '..'
+import supabase from 'supabase'
+import { CODES } from 'constants/codes'
+import { toggleRestaurantLike } from 'store/restaurants/actions'
 
 const City = () => {
   const history = useHistory()
   const { cityId } = useParams<{ cityId: string }>()
   const dispatch = useDispatch()
+  const toast = useToast()
+
+  const { user, likedRestaurants } = useAppSelector((state) => state.user)
+
+  React.useEffect(() => {
+    dispatch(fetchCity(parseInt(cityId)))
+  }, [dispatch, cityId])
 
   const {
     city,
     meta: { isCityLoading },
   } = useAppSelector((state) => state.cities)
 
-  const onLikeClick = (restaurantId: string): void => {
-    console.log(restaurantId)
+  console.log({ city, isCityLoading })
+
+  const onLikeClick = async (restaurantId: number, isLiked: boolean) => {
+    const newLikedState = !isLiked
+
+    if (!user?.id) {
+      return toast({
+        position: 'top-right',
+        title: 'Oops! Cannot do that.',
+        description: 'Please login to like.',
+        status: 'error',
+        isClosable: true,
+        duration: 3000,
+      })
+    }
+
+    let result
+    if (newLikedState === true) {
+      result = await supabase
+        .from('likes')
+        .insert([{ user_id: user.id, restaurant_id: restaurantId }])
+    } else {
+      result = await supabase
+        .from('likes')
+        .delete()
+        .match({ user_id: user.id, restaurant_id: restaurantId })
+    }
+
+    const { error } = result
+
+    if (error) {
+      if (error.code === CODES.DUPLICATE_RECORD) {
+        return console.log('unlike')
+      }
+      return toast({
+        position: 'top-right',
+        title: 'Something went wrong!',
+        description: 'Please try again, later.',
+        status: 'error',
+        isClosable: true,
+        duration: 3000,
+      })
+    }
+
+    dispatch(toggleRestaurantLike(restaurantId, newLikedState))
   }
 
   const navigateToRestaurants = () =>
     history.push(`/cities/${city?.id}/restaurants`)
 
   const navigateToRestaurant = React.useCallback(
-    (restaurantId: string) =>
+    (restaurantId: number) =>
       history.push(`/cities/${city?.id}/restaurants/${restaurantId}`),
     [history, city]
   )
-
-  React.useEffect(() => {
-    dispatch(fetchCity(parseInt(cityId)))
-  }, [dispatch, cityId])
 
   return (
     <Layout pt={8} pb={48}>
@@ -73,7 +122,7 @@ const City = () => {
             </BreadcrumbItem>
             <BreadcrumbItem isCurrentPage>
               <BreadcrumbLink>
-                <Link to={`/cities/${city?.id}`}>{city?.name}</Link>
+                <Link to={`/cities/${city.id}`}>{city.name}</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>
@@ -133,14 +182,21 @@ const City = () => {
               Restaurants
             </Heading>
             <SimpleGrid columns={3} spacing={8} mb={8}>
-              {city.restaurants.map((restaurant: Restaurant) => (
-                <RestaurantCard
-                  key={restaurant.id}
-                  restaurant={restaurant}
-                  onLikeClick={onLikeClick}
-                  onHeadingClick={navigateToRestaurant}
-                />
-              ))}
+              {city.restaurants.map((restaurant: Restaurant) => {
+                const isRestaurantLiked =
+                  user && likedRestaurants.includes(restaurant.id)
+                return (
+                  <RestaurantCard
+                    key={restaurant.id}
+                    restaurant={restaurant}
+                    isRestaurantLiked={isRestaurantLiked}
+                    onLikeClick={() =>
+                      onLikeClick(restaurant.id, isRestaurantLiked)
+                    }
+                    onHeadingClick={() => navigateToRestaurant(restaurant.id)}
+                  />
+                )
+              })}
             </SimpleGrid>
             <Center>
               <Button

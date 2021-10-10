@@ -35,13 +35,13 @@ const TOAST_OPTIONS = {
 }
 
 const Navbar = () => {
-   const dispatch = useDispatch()
-   const { pathname } = useLocation()
+  const dispatch = useDispatch()
+  const { pathname } = useLocation()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast()
 
-   const { user } = useAppSelector((state) => state.user)
-   const isRootRoute = pathname === '/'
+  const { user } = useAppSelector((state) => state.user)
+  const isRootRoute = pathname === '/'
 
   const btnRef = React.useRef()
   const [isNewUser, setIsNewUser] = React.useState<boolean>(true)
@@ -64,6 +64,7 @@ const Navbar = () => {
       setInFlight(true)
 
       if (!email || !password) {
+        setInFlight(false)
         return toast({
           ...TOAST_OPTIONS,
           title: 'Invalid input!',
@@ -80,6 +81,7 @@ const Navbar = () => {
             email
           )
         ) {
+          setInFlight(false)
           return toast({
             ...TOAST_OPTIONS,
             title: 'Invalid email!',
@@ -89,6 +91,7 @@ const Navbar = () => {
           })
         }
         if (password.length < 6) {
+          setInFlight(false)
           return toast({
             ...TOAST_OPTIONS,
             title: 'Invalid password!',
@@ -116,6 +119,7 @@ const Navbar = () => {
       const { user, session, error } = result
 
       if (error) {
+        setInFlight(false)
         return toast({
           ...TOAST_OPTIONS,
           title: isNewUser ? 'Failed to create account!' : 'Failed to login!',
@@ -141,6 +145,8 @@ const Navbar = () => {
           }
         )
       )
+
+      setInFlight(false)
       onClose()
     } catch (error) {
       setInFlight(false)

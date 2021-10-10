@@ -22,7 +22,9 @@ export const CITY: string = `
         id,
         name,
         images,
-        likes,
+        likes (
+           count
+        ),
         price_for_two
     )
 `
@@ -34,7 +36,9 @@ export const RESTAURANTS: string = `
         id,
         name,
         images,
-        likes,
+        likes (
+           count
+        ),
         price_for_two
     )
 `
@@ -44,7 +48,9 @@ export const RESTAURANT: string = `
     name,
     images,
     cuisines,
-    likes,
+    likes (
+       count
+    ),
     price_for_two,
     is_vegan,
     address,

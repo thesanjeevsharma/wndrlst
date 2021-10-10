@@ -7,25 +7,31 @@ import type { Restaurant } from 'types/restaurants'
 
 type Props = {
   restaurant: Restaurant
-  onLikeClick: (id: string) => void
-  onHeadingClick: (id: string) => void
+  onLikeClick: () => void
+  onHeadingClick: () => void
+  isRestaurantLiked: boolean
 }
 
-const RestaurantCard = ({ restaurant, onLikeClick, onHeadingClick }: Props) => {
+const RestaurantCard = ({
+  restaurant,
+  onLikeClick,
+  onHeadingClick,
+  isRestaurantLiked = false,
+}: Props) => {
   const { name, images, price_for_two, likes, cuisines } = restaurant
 
   const handleLikeClick = (
     event: React.MouseEvent<SVGElement, MouseEvent>
   ): void => {
     event.stopPropagation()
-    onLikeClick(restaurant.id)
+    onLikeClick()
   }
 
   const handleHeadingClick = (
     event: React.MouseEvent<HTMLHeadingElement, MouseEvent>
   ): void => {
     event.stopPropagation()
-    onHeadingClick(restaurant.id)
+    onHeadingClick()
   }
 
   return (
@@ -51,9 +57,13 @@ const RestaurantCard = ({ restaurant, onLikeClick, onHeadingClick }: Props) => {
           </Text>
         </Box>
         <Flex align="center">
-          <LikeIcon cursor="pointer" onClick={handleLikeClick} />
+          <LikeIcon
+            cursor="pointer"
+            onClick={handleLikeClick}
+            isFilled={isRestaurantLiked}
+          />
           <Text color="gray.600" ml={2}>
-            {likes.toLocaleString('en-US')} likes
+            {likes.toLocaleString('en-US')} like{likes > 1 ? 's' : ''}
           </Text>
         </Flex>
       </Flex>

@@ -4,6 +4,7 @@ import {
   FETCHING_RESTAURANTS,
   FETCH_RESTAURANT,
   FETCH_RESTAURANTS,
+  RESTAURANT_LIKE_TOGGLED,
 } from './actions'
 
 type State = {
@@ -51,7 +52,10 @@ export const restaurantsReducer = (state: State = initialState, action) => {
       return {
         ...state,
         city: action.payload.city,
-        restaurants: action.payload.restaurants,
+        restaurants: action.payload.restaurants.map((restaurant) => ({
+          ...restaurant,
+          likes: restaurant.likes[0].count,
+        })),
         meta: {
           ...state.meta,
           isRestaurantsLoading: false,
@@ -74,12 +78,46 @@ export const restaurantsReducer = (state: State = initialState, action) => {
     case FETCH_RESTAURANT: {
       return {
         ...state,
-        restaurant: action.payload.restaurant,
+        restaurant: {
+          ...action.payload.restaurant,
+          likes: action.payload.restaurant.likes[0].count,
+        },
         meta: {
           ...state.meta,
           isRestaurantLoading: false,
           restaurantError: null,
         },
+      }
+    }
+
+    case RESTAURANT_LIKE_TOGGLED: {
+      let updatedRestaurant
+      if (
+        state.restaurant &&
+        state.restaurant.id === action.payload.restaurantId
+      ) {
+        const updatedLikes = action.payload.isLiked
+          ? state.restaurant.likes + 1
+          : state.restaurant.likes - 1
+        updatedRestaurant = { ...state.restaurant, likes: updatedLikes }
+      } else {
+        updatedRestaurant = state.restaurant
+      }
+
+      const updatedRestaurants = state.restaurants.map((restaurant) => {
+        if (restaurant.id === action.payload.restaurantId) {
+          const updatedLikes = action.payload.isLiked
+            ? restaurant.likes + 1
+            : restaurant.likes - 1
+          return { ...restaurant, likes: updatedLikes }
+        }
+        return restaurant
+      })
+
+      return {
+        ...state,
+        restaurant: updatedRestaurant,
+        restaurants: updatedRestaurants,
       }
     }
 

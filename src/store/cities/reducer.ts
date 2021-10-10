@@ -7,6 +7,7 @@ import {
 } from './actions'
 
 import type { City, LeanCity } from 'types/cities'
+import { RESTAURANT_LIKE_TOGGLED } from 'store/restaurants/actions'
 
 export type State = {
   cities: City[]
@@ -76,7 +77,13 @@ export const citiesReducer = (state = initialState, action): State => {
     case FETCH_CITY: {
       return {
         ...state,
-        city: action.payload.city,
+        city: {
+          ...action.payload.city,
+          restaurants: action.payload.city.restaurants.map((restaurant) => ({
+            ...restaurant,
+            likes: restaurant.likes[0].count,
+          })),
+        },
         meta: {
           ...state.meta,
           isCityLoading: false,
@@ -92,6 +99,26 @@ export const citiesReducer = (state = initialState, action): State => {
           ...state.meta,
           isCityLoading: false,
           cityError: action.payload.error,
+        },
+      }
+    }
+
+    case RESTAURANT_LIKE_TOGGLED: {
+      const updatedRestaurants = state.city.restaurants.map((restaurant) => {
+        if (restaurant.id === action.payload.restaurantId) {
+          const updatedLikes = action.payload.isLiked
+            ? restaurant.likes + 1
+            : restaurant.likes - 1
+          return { ...restaurant, likes: updatedLikes }
+        }
+        return restaurant
+      })
+
+      return {
+        ...state,
+        city: {
+          ...state.city,
+          restaurants: updatedRestaurants,
         },
       }
     }
