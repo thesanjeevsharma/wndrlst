@@ -1,5 +1,5 @@
 import type { User, Session } from 'types/users'
-import { LOGIN_USER } from './actions'
+import { LOGIN_USER, LOGOUT_USER } from './actions'
 
 type State = {
   user: User | null
@@ -18,6 +18,13 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         user: action.payload.user,
         session: action.payload.session,
+      }
+    }
+    case LOGOUT_USER: {
+      return {
+        ...state,
+        user: null,
+        session: null,
       }
     }
 

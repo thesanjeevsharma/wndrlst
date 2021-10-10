@@ -20,13 +20,14 @@ import {
 } from '@chakra-ui/modal'
 import { Input, InputGroup, InputLeftElement } from '@chakra-ui/input'
 import { useDisclosure } from '@chakra-ui/hooks'
-import { useToast } from '@chakra-ui/react'
+import { useToast, Avatar } from '@chakra-ui/react'
 
 import { ArrowInIcon, EmailIcon, ProfileIcon } from 'assets/icons'
 import supabase from 'supabase'
 import { useDispatch } from 'react-redux'
-import { loginUser } from 'store/user/actions'
+import { loginUser, logoutUser } from 'store/user/actions'
 import { useAppSelector } from 'store'
+import { useLocation } from 'react-router'
 
 const TOAST_OPTIONS = {
   duration: 3000,
@@ -34,11 +35,13 @@ const TOAST_OPTIONS = {
 }
 
 const Navbar = () => {
-  const dispatch = useDispatch()
+   const dispatch = useDispatch()
+   const { pathname } = useLocation()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast()
 
-  const { user } = useAppSelector((state) => state.user)
+   const { user } = useAppSelector((state) => state.user)
+   const isRootRoute = pathname === '/'
 
   const btnRef = React.useRef()
   const [isNewUser, setIsNewUser] = React.useState<boolean>(true)
@@ -69,39 +72,53 @@ const Navbar = () => {
           position: 'top-right',
         })
       }
-      if (
-        // eslint-disable-next-line no-useless-escape
-        !/^([0-9a-zA-Z]([-\.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/.test(
-          email
-        )
-      ) {
-        return toast({
-          ...TOAST_OPTIONS,
-          title: 'Invalid email!',
-          description: 'Enter a valid email.',
-          status: 'error',
-          position: 'top-right',
-        })
+
+      if (isNewUser) {
+        if (
+          // eslint-disable-next-line no-useless-escape
+          !/^([0-9a-zA-Z]([-\.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/.test(
+            email
+          )
+        ) {
+          return toast({
+            ...TOAST_OPTIONS,
+            title: 'Invalid email!',
+            description: 'Enter a valid email.',
+            status: 'error',
+            position: 'top-right',
+          })
+        }
+        if (password.length < 6) {
+          return toast({
+            ...TOAST_OPTIONS,
+            title: 'Invalid password!',
+            description: 'Password should have at least 6 characters.',
+            status: 'error',
+            position: 'top-right',
+          })
+        }
       }
-      if (password.length < 6) {
-        return toast({
-          ...TOAST_OPTIONS,
-          title: 'Invalid password!',
-          description: 'Password should have at least 6 characters.',
-          status: 'error',
-          position: 'top-right',
+
+      let result
+
+      if (isNewUser) {
+        result = await supabase.auth.signUp({
+          email,
+          password,
+        })
+      } else {
+        result = await supabase.auth.signIn({
+          email,
+          password,
         })
       }
 
-      const { user, session, error } = await supabase.auth.signUp({
-        email,
-        password,
-      })
+      const { user, session, error } = result
 
       if (error) {
         return toast({
           ...TOAST_OPTIONS,
-          title: 'Failed to create account!',
+          title: isNewUser ? 'Failed to create account!' : 'Failed to login!',
           description: error.message,
           status: 'error',
           position: 'top-right',
@@ -110,7 +127,7 @@ const Navbar = () => {
 
       toast({
         ...TOAST_OPTIONS,
-        title: 'Account created!',
+        title: isNewUser ? 'Account created!' : 'Login successful!',
         description: `Welcome, ${user.email}!`,
         status: 'success',
         position: 'top-right',
@@ -138,13 +155,54 @@ const Navbar = () => {
     }
   }
 
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut()
+
+      if (error) {
+        return toast({
+          ...TOAST_OPTIONS,
+          title: 'Failed to logout!',
+          description: error.message,
+          status: 'error',
+          position: 'top-right',
+        })
+      }
+
+      toast({
+        ...TOAST_OPTIONS,
+        title: 'Logged out!',
+        description: "Hope you'll be back soon.",
+        status: 'success',
+        position: 'top-right',
+      })
+
+      dispatch(logoutUser())
+    } catch (err) {
+      return toast({
+        ...TOAST_OPTIONS,
+        title: 'Something went wrong!',
+        description: err.message,
+        status: 'error',
+        position: 'top-right',
+      })
+    }
+  }
+
   return (
     <Flex align="center" justify="space-between" height={16} px={12}>
       <Heading size="lg">wndrlst</Heading>
       <Popover>
         <PopoverTrigger>
           <Button variant="link">
-            <ProfileIcon cursor="pointer" />
+            {user ? (
+              <Avatar name={user.email} bg="green.500" />
+            ) : (
+              <ProfileIcon
+                color={isRootRoute ? 'white' : 'green.500'}
+                cursor="pointer"
+              />
+            )}
           </Button>
         </PopoverTrigger>
         <Portal>
@@ -158,9 +216,9 @@ const Navbar = () => {
                   </Text>
                   <Button
                     variant="link"
-                    colorScheme="gray.500"
+                    colorScheme="gray.300"
                     ref={btnRef}
-                    onClick={openLoginDrawer}
+                    onClick={handleLogout}
                     mb={2}
                   >
                     Logout
