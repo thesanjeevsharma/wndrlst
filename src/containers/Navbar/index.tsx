@@ -28,6 +28,7 @@ import { useDispatch } from 'react-redux'
 import { loginUser, logoutUser } from 'store/user/actions'
 import { useAppSelector } from 'store'
 import { useLocation } from 'react-router'
+import { Link } from 'react-router-dom'
 
 const TOAST_OPTIONS = {
   duration: 3000,
@@ -197,7 +198,11 @@ const Navbar = () => {
 
   return (
     <Flex align="center" justify="space-between" height={16} px={12}>
-      <Heading size="lg">wndrlst</Heading>
+      <Link to="/">
+        <Heading size="lg" style={{ fontFamily: `'Domine', serif` }}>
+          wndrlst
+        </Heading>
+      </Link>
       <Popover>
         <PopoverTrigger>
           <Button variant="link">

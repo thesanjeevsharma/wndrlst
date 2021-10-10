@@ -59,7 +59,7 @@ const Restaurant = () => {
         position: 'top-right',
         title: 'Oops! Cannot do that.',
         description: 'Please login to like.',
-        status: 'error',
+        status: 'warning',
         isClosable: true,
         duration: 3000,
       })
@@ -207,9 +207,10 @@ const Restaurant = () => {
 
             <Divider mb={8} />
 
-            {/* <Box>
-          <Heading size="md">Reviews</Heading>
-        </Box> */}
+            <Box>
+              <Heading size="md">Reviews</Heading>
+              <Text>Coming soon...</Text>
+            </Box>
           </Box>
         </>
       )}

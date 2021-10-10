@@ -55,7 +55,7 @@ const City = () => {
         position: 'top-right',
         title: 'Oops! Cannot do that.',
         description: 'Please login to like.',
-        status: 'error',
+        status: 'warning',
         isClosable: true,
         duration: 3000,
       })
@@ -137,7 +137,7 @@ const City = () => {
                 {city.is_covid_free ? (
                   <Badge colorScheme="green">COVID Free</Badge>
                 ) : (
-                  <Badge colorScheme="warning">Not COVID Free</Badge>
+                  <Badge colorScheme="orange">Not COVID Free</Badge>
                 )}
                 {city.is_hill_station && (
                   <Badge colorScheme="purple">Mountains</Badge>
@@ -173,7 +173,13 @@ const City = () => {
               <Text size="xl">{city.description}</Text>
             </Box>
             <Box>
-              <Image src={city.images[0]} borderRadius={8} />
+              <Image
+                src={city.images[0]}
+                borderRadius={8}
+                w="full"
+                maxH="500px"
+                objectFit="cover"
+              />
             </Box>
           </SimpleGrid>
 

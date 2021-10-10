@@ -63,7 +63,7 @@ const RestaurantCard = ({
             isFilled={isRestaurantLiked}
           />
           <Text color="gray.600" ml={2}>
-            {likes.toLocaleString('en-US')} like{likes > 1 ? 's' : ''}
+            {likes.toLocaleString('en-US')} like{likes === 1 ? '' : 's'}
           </Text>
         </Flex>
       </Flex>
