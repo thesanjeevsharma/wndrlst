@@ -11,7 +11,7 @@ type Props = {
   onCityClick: (cityId: string) => void
 }
 
-const CitiesSection = ({ title, data, onCityClick }: Props) => {
+const CitiesSection = ({ title, data = [], onCityClick }: Props) => {
   return (
     <Box>
       <Heading mb={8}>{title}</Heading>

@@ -1,13 +1,13 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { Box, Center, VStack } from '@chakra-ui/layout'
+import { Box, Center, Text, VStack } from '@chakra-ui/layout'
 import { Button, Spinner } from '@chakra-ui/react'
 
 import { useAppSelector } from 'store'
 import { fetchPopularCities } from 'store/cities/actions'
 
-import { CitiesSection, Search } from '../../components'
+import { CitiesSection } from '../../components'
 import { Layout, Navbar } from '../'
 
 const Home = () => {
@@ -41,7 +41,16 @@ const Home = () => {
       >
         <Navbar />
         <Center height={80}>
-          <Search onSearch={(val) => console.log(val)} />
+          <Text
+            color="white"
+            fontSize="xl"
+            fontWeight="bold"
+            bg="whatsapp.500"
+            p={2}
+          >
+            Find Restaurants and more in Unknown Cities like a Known
+          </Text>
+          {/* <Search onSearch={(val) => console.log(val)} /> */}
         </Center>
       </Box>
       <Box px={12} pt={16} pb={40}>

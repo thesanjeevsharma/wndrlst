@@ -1,20 +1,27 @@
 import React, { ReactNode } from 'react'
-import { Box } from '@chakra-ui/layout'
+import { useLocation } from 'react-router'
+import { Box, BoxProps } from '@chakra-ui/layout'
 
 import { Navbar, Footer } from '../'
 
-type Props = {
+type Props = BoxProps & {
   children: ReactNode
   withNav?: boolean
-  // TODO: add BoxProps here
-  [key: string]: any
 }
 
 const Layout = ({ children, withNav = true, px = 12, ...props }: Props) => {
+  const { pathname } = useLocation()
+
+  React.useEffect(() => {
+    window.scrollTo({
+      top: 0,
+    })
+  }, [pathname])
+
   return (
     <Box textColor="gray.700">
       {withNav && <Navbar />}
-      <Box px={px} {...props}>
+      <Box px={px} {...props} minH="100vh">
         {children}
       </Box>
       <Footer />
