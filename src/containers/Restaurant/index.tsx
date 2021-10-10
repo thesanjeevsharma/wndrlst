@@ -104,7 +104,7 @@ const Restaurant = () => {
     <Layout pt={8} pb={48}>
       {isRestaurantLoading ? (
         <Center>
-          <Spinner color="green.500" size="sm" />
+          <Spinner color="#22c35e" size="sm" />
         </Center>
       ) : (
         <>

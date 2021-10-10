@@ -36,7 +36,7 @@ const Cities = () => {
         </Heading>
         {isLoading ? (
           <Center>
-            <Spinner color="green.500" size="sm" />
+            <Spinner color="#22c35e" size="sm" />
           </Center>
         ) : (
           <>

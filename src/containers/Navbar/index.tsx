@@ -205,7 +205,7 @@ const Navbar = () => {
               <Avatar name={user.email} bg="green.500" />
             ) : (
               <ProfileIcon
-                color={isRootRoute ? 'white' : 'green.500'}
+                color={isRootRoute ? 'white' : '#22c35e'}
                 cursor="pointer"
               />
             )}

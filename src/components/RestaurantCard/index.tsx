@@ -45,7 +45,7 @@ const RestaurantCard = ({
             size="md"
             cursor="pointer"
             _hover={{
-              color: 'green.500',
+              color: '#22c35e',
             }}
             onClick={handleHeadingClick}
           >

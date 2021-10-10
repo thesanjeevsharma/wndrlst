@@ -105,7 +105,7 @@ const City = () => {
     <Layout pt={8} pb={48}>
       {isCityLoading ? (
         <Center>
-          <Spinner color="green.500" size="sm" />
+          <Spinner color="#22c35e" size="sm" />
         </Center>
       ) : (
         <>
