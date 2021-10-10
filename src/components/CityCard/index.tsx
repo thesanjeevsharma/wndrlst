@@ -1,20 +1,20 @@
-import React from "react";
-import { Box, Center, Text } from "@chakra-ui/layout";
+import React from 'react'
+import { Box, Center, Text } from '@chakra-ui/layout'
 
-import type { HomeCity } from "types/cities";
+import type { LeanCity } from 'types/cities'
 
 type Props = {
-  city: HomeCity;
-  onClick: (id: string) => void;
-};
+  city: LeanCity
+  onClick: (id: string) => void
+}
 
 const CityCard = ({ city, onClick }: Props) => {
-  const { id, name, image } = city;
+  const { id, name, images } = city
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>): void => {
-    event.preventDefault();
-    onClick(id);
-  };
+    event.preventDefault()
+    onClick(id)
+  }
 
   return (
     <Box
@@ -22,7 +22,7 @@ const CityCard = ({ city, onClick }: Props) => {
       height={48}
       borderRadius={8}
       overflow="hidden"
-      bgImage={`url(${image})`}
+      bgImage={`url(${images[0]})`}
       bgSize="cover"
       position="relative"
       cursor="pointer"
@@ -41,7 +41,7 @@ const CityCard = ({ city, onClick }: Props) => {
         <Text>{name}</Text>
       </Center>
     </Box>
-  );
-};
+  )
+}
 
-export default CityCard;
+export default CityCard

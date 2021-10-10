@@ -1,37 +1,43 @@
-import React from "react";
-import { Image } from "@chakra-ui/image";
-import { Box, Flex, Heading, Text } from "@chakra-ui/layout";
+import React from 'react'
+import { Image } from '@chakra-ui/image'
+import { Box, Flex, Heading, Text } from '@chakra-ui/layout'
 
-import { LikeIcon } from "assets/icons";
-import type { Restaurant } from "types/restaurants";
+import { LikeIcon } from 'assets/icons'
+import type { Restaurant } from 'types/restaurants'
 
 type Props = {
-  restaurant: Restaurant;
-  onLikeClick: (id: string) => void;
-  onHeadingClick: (id: string) => void;
-};
+  restaurant: Restaurant
+  onLikeClick: () => void
+  onHeadingClick: () => void
+  isRestaurantLiked: boolean
+}
 
-const RestaurantCard = ({ restaurant, onLikeClick, onHeadingClick }: Props) => {
-  const { name, images, priceForTwo, likes, cuisines } = restaurant;
+const RestaurantCard = ({
+  restaurant,
+  onLikeClick,
+  onHeadingClick,
+  isRestaurantLiked = false,
+}: Props) => {
+  const { name, images, price_for_two, likes, cuisines } = restaurant
 
   const handleLikeClick = (
     event: React.MouseEvent<SVGElement, MouseEvent>
   ): void => {
-    event.stopPropagation();
-    onLikeClick(restaurant.id);
-  };
+    event.stopPropagation()
+    onLikeClick()
+  }
 
   const handleHeadingClick = (
     event: React.MouseEvent<HTMLHeadingElement, MouseEvent>
   ): void => {
-    event.stopPropagation();
-    onHeadingClick(restaurant.id);
-  };
+    event.stopPropagation()
+    onHeadingClick()
+  }
 
   return (
     <Box>
       <Box bg="gray.100" height="300" overflow="hidden" borderRadius={8}>
-        <Image src={images[0]} width="100%" height="auto" />
+        <Image src={images[0]} width="100%" height="100%" objectFit="cover" />
       </Box>
       <Flex p={4} align="flex-start" justify="space-between">
         <Box>
@@ -39,26 +45,30 @@ const RestaurantCard = ({ restaurant, onLikeClick, onHeadingClick }: Props) => {
             size="md"
             cursor="pointer"
             _hover={{
-              color: "green.500",
+              color: 'green.500',
             }}
             onClick={handleHeadingClick}
           >
             {name}
           </Heading>
-          {cuisines && <Text color="gray.500"> {cuisines.join(",")} </Text>}
+          {cuisines && <Text color="gray.500"> {cuisines.join(',')} </Text>}
           <Text mt={2} textColor="gray.600" fontWeight="bold">
-            ${priceForTwo} for two
+            ${price_for_two} for two
           </Text>
         </Box>
         <Flex align="center">
-          <LikeIcon cursor="pointer" onClick={handleLikeClick} />
+          <LikeIcon
+            cursor="pointer"
+            onClick={handleLikeClick}
+            isFilled={isRestaurantLiked}
+          />
           <Text color="gray.600" ml={2}>
-            {likes.toLocaleString("en-US")} likes
+            {likes.toLocaleString('en-US')} like{likes > 1 ? 's' : ''}
           </Text>
         </Flex>
       </Flex>
     </Box>
-  );
-};
+  )
+}
 
-export default RestaurantCard;
+export default RestaurantCard

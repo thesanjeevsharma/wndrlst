@@ -1,12 +1,13 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
-import { City, Home, Restaurant, Restaurants } from "./containers";
+import { Cities, City, Home, Restaurant, Restaurants } from './containers'
 
 const App = () => {
   return (
     <Router>
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route exact path="/cities" component={Cities} />
         <Route exact path="/cities/:cityId" component={City} />
         <Route
           exact
@@ -20,7 +21,7 @@ const App = () => {
         />
       </Switch>
     </Router>
-  );
-};
+  )
+}
 
-export default App;
+export default App

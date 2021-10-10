@@ -1,14 +1,14 @@
-import React, { ReactNode } from "react";
-import { Box } from "@chakra-ui/layout";
+import React, { ReactNode } from 'react'
+import { Box } from '@chakra-ui/layout'
 
-import { Navbar, Footer } from "../";
+import { Navbar, Footer } from '../'
 
 type Props = {
-  children: ReactNode;
-  withNav?: boolean;
+  children: ReactNode
+  withNav?: boolean
   // TODO: add BoxProps here
-  [key: string]: any;
-};
+  [key: string]: any
+}
 
 const Layout = ({ children, withNav = true, px = 12, ...props }: Props) => {
   return (
@@ -19,7 +19,7 @@ const Layout = ({ children, withNav = true, px = 12, ...props }: Props) => {
       </Box>
       <Footer />
     </Box>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Layout

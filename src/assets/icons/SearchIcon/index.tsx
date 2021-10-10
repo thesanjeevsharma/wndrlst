@@ -1,13 +1,13 @@
-import React from "react";
-import Icon from "@chakra-ui/icon";
+import React from 'react'
+import Icon from '@chakra-ui/icon'
 
 type Props = {
-  size?: number;
-  boldness?: number;
-  color?: string;
-};
+  size?: number
+  boldness?: number
+  color?: string
+}
 
-const Search = ({ size = 4, color = "gray.700", boldness = 2 }: Props) => (
+const Search = ({ size = 4, color = 'gray.700', boldness = 2 }: Props) => (
   <Icon
     xmlns="http://www.w3.org/2000/svg"
     width={size}
@@ -22,6 +22,6 @@ const Search = ({ size = 4, color = "gray.700", boldness = 2 }: Props) => (
     <circle cx="11" cy="11" r="8"></circle>
     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
   </Icon>
-);
+)
 
-export default Search;
+export default Search

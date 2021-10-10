@@ -1,20 +1,20 @@
-import React from "react";
-import { Button } from "@chakra-ui/button";
-import { Input, InputGroup, InputLeftElement } from "@chakra-ui/input";
-import { Flex, Stack } from "@chakra-ui/layout";
+import React from 'react'
+import { Button } from '@chakra-ui/button'
+import { Input, InputGroup, InputLeftElement } from '@chakra-ui/input'
+import { Flex, Stack } from '@chakra-ui/layout'
 
-import { SearchIcon } from "assets/icons";
+import { SearchIcon } from 'assets/icons'
 
 type Props = {
-  onSearch: (query: string) => void;
-};
+  onSearch: (query: string) => void
+}
 
 const Search = ({ onSearch }: Props) => {
-  const [query, setQuery] = React.useState("");
+  const [query, setQuery] = React.useState('')
 
   const handleSearch = () => {
-    onSearch(query);
-  };
+    onSearch(query)
+  }
 
   return (
     <Flex align="center">
@@ -37,7 +37,7 @@ const Search = ({ onSearch }: Props) => {
         Search
       </Button>
     </Flex>
-  );
-};
+  )
+}
 
-export default Search;
+export default Search

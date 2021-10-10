@@ -1,14 +1,15 @@
-import React from "react";
-import { Box, Grid, Heading } from "@chakra-ui/layout";
+import React from 'react'
+import { Box, Grid, Heading } from '@chakra-ui/layout'
 
-import { CityCard } from "..";
-import type { HomeCity } from "types/cities";
+import type { LeanCity } from 'types/cities'
+
+import { CityCard } from '..'
 
 type Props = {
-  title: string;
-  data: HomeCity[];
-  onCityClick: (cityId: string) => void;
-};
+  title: string
+  data: LeanCity[]
+  onCityClick: (cityId: string) => void
+}
 
 const CitiesSection = ({ title, data, onCityClick }: Props) => {
   return (
@@ -20,7 +21,7 @@ const CitiesSection = ({ title, data, onCityClick }: Props) => {
         ))}
       </Grid>
     </Box>
-  );
-};
+  )
+}
 
-export default CitiesSection;
+export default CitiesSection
