@@ -205,7 +205,6 @@ const Restaurants = () => {
       setAddress('')
       setImages([''])
       setIsVegan(false)
-      setInFlight(false)
       onClose()
       toast({
         position: 'top-right',
