@@ -1,46 +1,47 @@
-# Getting Started with Create React App
+# wndrlst
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Find Restaurants, Tourists spots, Shopping points, and much more in Cities you don't know much about.
 
-## Available Scripts
+![Screenshot of the App](./screenshot.png)
+
+#### 🌏 Online Demo
+
+Hosted on Netlify: [https://wndrlst.netlify.app/](https://wndrlst.netlify.app/)
+##### 💻 Running Locally
 
 In the project directory, you can run:
+1. `yarn`
+2. `yarn start`
 
-### `yarn start`
+> Make sure you have env vars set up for Supabase
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+*If at any point app crashes and reloading doesn't help, clear the local storage. I am yet to handle the errors gracefully. 🙈*
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+---
+#### ⚡ Supabase
 
-### `yarn test`
+Supabase used for:
+1. Authentication - for email login
+2. Database - for storing data related to cities, restaurants, likes, requests, etc.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### 💪 Motivation
 
-### `yarn build`
+There's a cute little cafe in my city. I go there almost every weekend. The owners are very sweet and kind people. I really like the Tea they make. When I told my friends about that, they were completely unaware of it. I was actually surprised. There's this supa-nice cafe and that people don't know about. Tourists visit my city too, but when not even localites are familiar with it, how can they know? Wait! How many places like this I missed in the cities I've travelled to? It'd be nice if there was a free app that could list all the beautiful things about a city like Restaurants, Shopping points, Entertainment spots, etc.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This is how I got this idea. I've be procrastinating  this for a long time. But Supabase Hackathon was the perfect opportunity to get me going.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Though right now this app has limited features but I've planned to expand it more both horizontally and vertically. Some of the features to be added soon are:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Reviews on Restaurants
+- Listing request status for users
+- Entertainment spots
+- Reporting fake places
+- ... so on
 
-### `yarn eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### 👦 Team
+Sanjeev Sharma - 
+[thesnjvsharma](https://twitter.com/thesnjvsharma/)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+![Meme](./meme.jpg)
