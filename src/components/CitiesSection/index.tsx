@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid, Heading, SimpleGrid } from '@chakra-ui/layout'
+import { Box, Heading, SimpleGrid } from '@chakra-ui/layout'
 
 import type { LeanCity } from 'types/cities'
 
