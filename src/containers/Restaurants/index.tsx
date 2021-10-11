@@ -273,7 +273,7 @@ const Restaurants = () => {
                 Add a Restaurant
               </Button>
             </Flex>
-            <SimpleGrid columns={3} spacing={8}>
+            <SimpleGrid columns={[1, null, 2, 3]} spacing={8}>
               {restaurants.map((restaurant: Restaurant) => {
                 const isRestaurantLiked =
                   user && likedRestaurants.includes(restaurant.id)

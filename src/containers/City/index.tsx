@@ -127,7 +127,7 @@ const City = () => {
             </BreadcrumbItem>
           </Breadcrumb>
 
-          <SimpleGrid columns={2} spacing={8} mb={24}>
+          <SimpleGrid columns={[1, null, null, null, 2]} spacing={8} mb={24}>
             <Box>
               <Heading>{city.name}</Heading>
               <Text size="lg" textColor="gray.500" mb={4}>
@@ -187,7 +187,7 @@ const City = () => {
             <Heading color="gray.600" size="lg" mb={8}>
               Restaurants
             </Heading>
-            <SimpleGrid columns={3} spacing={8} mb={8}>
+            <SimpleGrid columns={[1, null, null, 3]} spacing={8} mb={8}>
               {city.restaurants.map((restaurant: Restaurant) => {
                 const isRestaurantLiked =
                   user && likedRestaurants.includes(restaurant.id)

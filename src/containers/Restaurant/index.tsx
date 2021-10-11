@@ -158,7 +158,7 @@ const Restaurant = () => {
               >
                 {restaurant.images.map((image: string) => (
                   <Box
-                    height="600px"
+                    height={['240px', '320px', '480px', '600px']}
                     width="100%"
                     borderRadius={8}
                     overflow="hidden"

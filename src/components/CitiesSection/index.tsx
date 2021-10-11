@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid, Heading } from '@chakra-ui/layout'
+import { Box, Heading, SimpleGrid } from '@chakra-ui/layout'
 
 import type { LeanCity } from 'types/cities'
 
@@ -13,27 +13,13 @@ type Props = {
 
 const CitiesSection = ({ title, data = [], onCityClick }: Props) => {
   return (
-    <Box m={['0 auto', 'auto']}>
-      <Heading mb={8} textAlign={['center', null, 'left']}>
-        {title}
-      </Heading>
-      <Grid
-        alignItems="center"
-        templateColumns={[
-          '1fr',
-          '1fr 1fr',
-          null,
-          'repeat(3, 1fr)',
-          'repeat(4, 1fr)',
-          'repeat(5, 1fr)',
-          'repeat(6, 1fr)',
-        ]}
-        gap={4}
-      >
+    <Box w="full">
+      <Heading mb={8}>{title}</Heading>
+      <SimpleGrid columns={[1, null, 2, 3, 4, 5, 6]} gap={8}>
         {data.map((city) => (
           <CityCard city={city} onClick={onCityClick} />
         ))}
-      </Grid>
+      </SimpleGrid>
     </Box>
   )
 }

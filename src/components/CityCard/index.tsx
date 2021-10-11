@@ -18,8 +18,8 @@ const CityCard = ({ city, onClick }: Props) => {
 
   return (
     <Box
-      width={72}
-      height={72}
+      width="full"
+      height={'280px'}
       borderRadius={8}
       overflow="hidden"
       bgImage={`url(${images[0]})`}

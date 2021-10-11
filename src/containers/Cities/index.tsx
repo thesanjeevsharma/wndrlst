@@ -239,7 +239,7 @@ const Cities = () => {
               </BreadcrumbItem>
             </Breadcrumb>
 
-            <SimpleGrid columns={6} spacing={4}>
+            <SimpleGrid columns={[1, null, 2, 3]} spacing={8}>
               {cities.map((city) => (
                 <CityCard
                   key={city.id}
