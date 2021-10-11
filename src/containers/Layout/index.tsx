@@ -9,7 +9,12 @@ type Props = BoxProps & {
   withNav?: boolean
 }
 
-const Layout = ({ children, withNav = true, px = 12, ...props }: Props) => {
+const Layout = ({
+  children,
+  withNav = true,
+  px = [4, 8, 12],
+  ...props
+}: Props) => {
   const { pathname } = useLocation()
 
   React.useEffect(() => {
