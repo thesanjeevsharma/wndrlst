@@ -240,19 +240,7 @@ const Cities = () => {
               </BreadcrumbItem>
             </Breadcrumb>
 
-            <Grid
-              placeItems="center"
-              templateColumns={[
-                '1fr',
-                '1fr 1fr',
-                null,
-                'repeat(3, 1fr)',
-                'repeat(4, 1fr)',
-                'repeat(5, 1fr)',
-                'repeat(6, 1fr)',
-              ]}
-              gap={4}
-            >
+            <SimpleGrid columns={[1, null, 2, 3]} spacing={8}>
               {cities.map((city) => (
                 <CityCard
                   key={city.id}
@@ -260,7 +248,7 @@ const Cities = () => {
                   onClick={() => navigateToCity(city.id)}
                 />
               ))}
-            </Grid>
+            </SimpleGrid>
           </>
         )}
       </Box>
