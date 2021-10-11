@@ -149,13 +149,13 @@ const City = () => {
               <StatGroup mb={4}>
                 <Stat>
                   <StatLabel>Population</StatLabel>
-                  <StatNumber>
+                  <StatNumber fontSize={['lg', '2xl']}>
                     {city.population.toLocaleString('en-US')}
                   </StatNumber>
                 </Stat>
                 <Stat>
                   <StatLabel>Area</StatLabel>
-                  <StatNumber>
+                  <StatNumber fontSize={['lg', '2xl']}>
                     {`${city.area.toLocaleString('en-US')} km²`}
                   </StatNumber>
                 </Stat>
@@ -163,11 +163,15 @@ const City = () => {
               <StatGroup mb={8}>
                 <Stat>
                   <StatLabel>Language(s)</StatLabel>
-                  <StatNumber>{city.languages.join(',')}</StatNumber>
+                  <StatNumber fontSize={['lg', '2xl']}>
+                    {city.languages.join(',')}
+                  </StatNumber>
                 </Stat>
                 <Stat>
                   <StatLabel>Currency</StatLabel>
-                  <StatNumber>{city.currency}</StatNumber>
+                  <StatNumber fontSize={['lg', '2xl']}>
+                    {city.currency}
+                  </StatNumber>
                 </Stat>
               </StatGroup>
               <Text size="xl">{city.description}</Text>
@@ -183,7 +187,7 @@ const City = () => {
             </Box>
           </SimpleGrid>
 
-          <Box>
+          <Box mb={16}>
             <Heading color="gray.600" size="lg" mb={8}>
               Restaurants
             </Heading>
@@ -213,6 +217,13 @@ const City = () => {
                 View all Restaurants
               </Button>
             </Center>
+          </Box>
+
+          <Box>
+            <Heading color="gray.600" size="lg" mb={8}>
+              Entertainment Spots
+            </Heading>
+            <Text>Coming soon...</Text>
           </Box>
         </>
       )}
