@@ -9,6 +9,7 @@ import {
 import {
   Box,
   Flex,
+  Grid,
   Heading,
   HStack,
   SimpleGrid,
@@ -239,7 +240,19 @@ const Cities = () => {
               </BreadcrumbItem>
             </Breadcrumb>
 
-            <SimpleGrid columns={6} spacing={4}>
+            <Grid
+              placeItems="center"
+              templateColumns={[
+                '1fr',
+                '1fr 1fr',
+                null,
+                'repeat(3, 1fr)',
+                'repeat(4, 1fr)',
+                'repeat(5, 1fr)',
+                'repeat(6, 1fr)',
+              ]}
+              gap={4}
+            >
               {cities.map((city) => (
                 <CityCard
                   key={city.id}
@@ -247,7 +260,7 @@ const Cities = () => {
                   onClick={() => navigateToCity(city.id)}
                 />
               ))}
-            </SimpleGrid>
+            </Grid>
           </>
         )}
       </Box>
