@@ -13,9 +13,23 @@ type Props = {
 
 const CitiesSection = ({ title, data = [], onCityClick }: Props) => {
   return (
-    <Box>
-      <Heading mb={8}>{title}</Heading>
-      <Grid templateColumns="repeat(6, 1fr)" gap={4}>
+    <Box m={['0 auto', 'auto']}>
+      <Heading mb={8} textAlign={['center', null, 'left']}>
+        {title}
+      </Heading>
+      <Grid
+        alignItems="center"
+        templateColumns={[
+          '1fr',
+          '1fr 1fr',
+          null,
+          'repeat(3, 1fr)',
+          'repeat(4, 1fr)',
+          'repeat(5, 1fr)',
+          'repeat(6, 1fr)',
+        ]}
+        gap={4}
+      >
         {data.map((city) => (
           <CityCard city={city} onClick={onCityClick} />
         ))}

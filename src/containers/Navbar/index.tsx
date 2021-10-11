@@ -197,7 +197,7 @@ const Navbar = () => {
   }
 
   return (
-    <Flex align="center" justify="space-between" height={16} px={12}>
+    <Flex align="center" justify="space-between" height={16} px={[4, 8, 12]}>
       <Link to="/">
         <Heading size="lg" style={{ fontFamily: `'Domine', serif` }}>
           wndrlst

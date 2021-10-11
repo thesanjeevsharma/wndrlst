@@ -46,6 +46,7 @@ const Home = () => {
             fontSize="xl"
             fontWeight="bold"
             bg="whatsapp.500"
+            textAlign="center"
             p={2}
           >
             Find Restaurants and more in Unknown Cities like a Known
@@ -53,7 +54,7 @@ const Home = () => {
           {/* <Search onSearch={(val) => console.log(val)} /> */}
         </Center>
       </Box>
-      <Box px={12} pt={16} pb={40}>
+      <Box px={[4, 8, 12]} pt={16} pb={40}>
         {isLoading ? (
           <Center>
             <Spinner color="#22c35e" size="sm" />
